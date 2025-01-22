@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import { format, isToday, isYesterday } from "date-fns";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
@@ -11,6 +12,22 @@ const Message = ({ message }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
+
+  const formatDate = (dateObj) => {
+    if (!dateObj || !dateObj.seconds) return "Unknown date";
+
+    const date = new Date(dateObj.seconds * 1000);
+
+    if (isToday(date)) {
+      return `Today, ${format(date, "p")}`;
+    }
+
+    if (isYesterday(date)) {
+      return `Yesterday, ${format(date, "p")}`;
+    }
+
+    return format(date, "MMM d, yyyy, p");
+  };
 
   return (
     <div
@@ -26,11 +43,9 @@ const Message = ({ message }) => {
           }
           alt="User"
         />
-        <span>just now</span>
       </div>
       <div className="messageContent">
-        <p>{message.text}</p>
-
+        {message.text && <p>{message.text}</p>}
         {message.file && (
           <div className="fileContent">
             {message.file.mimeType?.startsWith("image/") ? (
@@ -51,6 +66,7 @@ const Message = ({ message }) => {
           </div>
         )}
       </div>
+      <span>{formatDate(message.date)}</span>
     </div>
   );
 };

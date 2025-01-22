@@ -2,14 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    #root {
-        @apply min-h-screen;
-    }
-}
-
 body {
-    @apply bg-slate-300;
+    @apply bg-zinc-300;
 }
 
 a {
@@ -47,6 +41,171 @@ a {
 
             .error {
                 @apply text-red-600;
+            }
+        }
+    }
+}
+
+.home {
+    @apply flex items-center justify-center w-screen h-screen;
+
+    .container {
+        @apply flex items-center justify-center flex-row min-h-[80vh] min-w-[65vw] rounded-lg border border-white overflow-hidden;
+
+        .sidebar {
+            @apply h-full max-h-[80vh] w-[30%] flex flex-col justify-between bg-zinc-700 overflow-hidden;
+
+            .top {
+                @apply h-[100vh];
+
+                .navbar {
+                    @apply flex justify-center px-4 py-2 bg-zinc-600;
+
+                    img {
+                        @apply w-[180px] rounded-full;
+                    }
+                }
+
+                .search {
+                    @apply flex flex-col justify-center border-b border-zinc-600;
+
+                    .searchForm {
+                        @apply flex flex-row gap-3 items-center px-4 py-2;
+
+                        input {
+                            @apply w-full bg-transparent outline-none text-white;
+                        }
+                    }
+
+                    .error {
+                        @apply text-center text-red-600 p-1;
+                    }
+
+                    .userChat {
+                        @apply flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-zinc-600 transition;
+
+                        img {
+                            @apply h-12 w-12 rounded-full;
+                        }
+
+                        .userChatInfo {
+                            @apply flex flex-col;
+
+                            span {
+                                @apply text-sm font-semibold text-white tracking-wide;
+                            }
+                        }
+                    }
+                }
+
+                .chats {
+                    @apply h-full overflow-y-auto select-none;
+
+                    .userChat {
+                        @apply flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-zinc-600 transition;
+
+                        img {
+                            @apply h-12 w-12 rounded-full;
+                        }
+
+                        .userChatInfo {
+                            @apply flex flex-col;
+
+                            span {
+                                @apply font-semibold text-white tracking-wide;
+                            }
+
+                            p {
+                                @apply text-sm text-zinc-400;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .footer {
+                @apply p-4 bg-zinc-600 select-none;
+
+                .user {
+                    @apply flex justify-between items-center gap-4;
+
+                    .profile {
+                        @apply flex items-center gap-2;
+
+                        img {
+                            @apply h-10 w-10 rounded-full;
+                        }
+
+                        span {
+                            @apply text-sm font-semibold text-white tracking-widest;
+                        }
+                    }
+
+                    button {
+                        @apply text-sm hover:bg-zinc-400/40 transition p-2 rounded-lg;
+                    }
+                }
+            }
+        }
+
+        .chat {
+            @apply w-[70%] h-[80vh] flex flex-col justify-center items-center bg-zinc-500;
+
+            .chatInfo {
+                @apply w-full flex items-center gap-2 px-4 py-3 bg-zinc-400;
+
+                img {
+                    @apply h-9 w-9 rounded-full;
+                }
+
+                span {
+                    @apply font-semibold;
+                }
+            }
+
+            .messages {
+                @apply h-full w-full p-4 overflow-y-auto;
+            }
+
+            .attachment {
+                @apply w-full p-2;
+
+                .attachmentPreview {
+                    @apply relative flex flex-row justify-between px-3 py-2 bg-zinc-700 rounded-lg;
+
+                    .preview {
+                        @apply flex flex-row items-center gap-2;
+
+                        img {
+                            @apply h-16;
+                        }
+
+                        .details {
+                            @apply flex flex-col text-xs text-white;
+                        }
+                    }
+
+                    .removeIcon {
+                        @apply absolute top-1 right-1 w-[20px] h-[20px] text-white cursor-pointer hover:bg-zinc-400 transition p-1 rounded-lg;
+                    }
+                }
+            }
+
+            .input {
+                @apply w-full flex flex-row items-center gap-2 bg-zinc-400;
+
+                input {
+                    @apply bg-transparent outline-none text-white placeholder:text-white w-full max-w-[80%] h-full pl-4;
+                }
+
+                .send {
+                    @apply flex flex-row justify-between items-center gap-2 w-full max-w-[25%] text-sm hover:bg-zinc-400/40 transition p-2 rounded-lg;
+
+                    button {
+                        @apply w-full flex flex-row justify-center items-center gap-2 text-sm uppercase tracking-wide font-bold bg-zinc-500 hover:bg-zinc-600 text-white transition p-2 rounded-lg;
+                    }
+                }
             }
         }
     }

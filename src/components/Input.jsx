@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import Img from "../img/img.png";
-import Attach from "../img/attach.png";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import {
@@ -13,10 +11,12 @@ import {
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { fileDrivetoken, getUploadServer } from "../fileDrive";
+import { FaImage, FaPaperclip, FaPaperPlane, FaX } from "react-icons/fa6";
 
 const Input = () => {
   const [text, setText] = useState("");
   const [attachment, setAttachment] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
@@ -95,6 +95,7 @@ const Input = () => {
 
       setText("");
       setAttachment(null);
+      setPreview(null);
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
@@ -102,30 +103,92 @@ const Input = () => {
     }
   };
 
+  const handleFileChange = (file) => {
+    setAttachment(file);
+
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => setPreview(e.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(null);
+    }
+  };
+
+  const handleRemoveAttachment = () => {
+    setAttachment(null);
+    setPreview(null);
+  };
+
   return (
-    <div className="input">
-      <input
-        type="text"
-        placeholder="Type something..."
-        onChange={(e) => setText(e.target.value)}
-        value={text}
-      />
-      <div className="send">
-        <img src={Attach} alt="Attach file" />
-        <input
-          type="file"
-          style={{ display: "none" }}
-          id="file"
-          onChange={(e) => setAttachment(e.target.files[0])}
-        />
-        <label htmlFor="file">
-          <img src={Img} alt="Upload" />
-        </label>
-        <button onClick={handleSend} disabled={isUploading}>
-          {isUploading ? "Uploading..." : "Send"}
-        </button>
+    <>
+      <div className="attachment">
+        {attachment && (
+          <div className="attachmentPreview">
+            {preview ? (
+              <div className="preview">
+                <img src={preview} alt="Preview" className="previewImage" />
+                <div className="details">
+                  <span>{attachment.name}</span>
+                  <span>{(attachment.size / 1024).toFixed(2)} KB</span>
+                </div>
+              </div>
+            ) : (
+              <div className="preview">
+                <div className="details">
+                  <span>{attachment.name}</span>
+                  <span>{(attachment.size / 1024).toFixed(2)} KB</span>
+                </div>
+              </div>
+            )}
+            <FaX className="removeIcon" onClick={handleRemoveAttachment} />
+          </div>
+        )}
       </div>
-    </div>
+      <div className="input">
+        <input
+          type="text"
+          placeholder="Type something..."
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+        />
+        <div className="send">
+          <label htmlFor="file">
+            <FaPaperclip
+              size={30}
+              className="text-white hover:text-zinc-300 transition"
+            />
+          </label>
+          <input
+            type="file"
+            style={{ display: "none" }}
+            id="file"
+            onChange={(e) => handleFileChange(e.target.files[0])}
+          />
+          <label htmlFor="image">
+            <FaImage
+              size={30}
+              className="text-white hover:text-zinc-300 transition"
+            />
+          </label>
+          <input
+            disabled={isUploading}
+            type="file"
+            style={{ display: "none" }}
+            id="image"
+            accept="image/*"
+            onChange={(e) => handleFileChange(e.target.files[0])}
+          />
+          <button
+            onClick={handleSend}
+            disabled={isUploading || (!attachment && text.length === 0)}
+          >
+            <FaPaperPlane className="text-white" />
+            {isUploading ? "Uploading..." : "Send"}
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
