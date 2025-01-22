@@ -22,18 +22,18 @@ const Input = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  const uploadToFilebin = async (file) => {
-    const uploadServer = await getUploadServer(); // Assuming this retrieves the correct server endpoint
+  const uploadFiveToServer = async (file) => {
+    const uploadServer = await getUploadServer();
 
     const formData = new FormData();
-    formData.append("file", file); // Use the "file" key as per the API requirements
+    formData.append("file", file);
 
     const response = await fetch(uploadServer.url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${fileDrivetoken}`, // Include the token
+        Authorization: `Bearer ${fileDrivetoken}`,
       },
-      body: formData, // Pass the FormData for the multipart upload
+      body: formData,
     });
 
     if (!response.ok) {
@@ -42,18 +42,16 @@ const Input = () => {
 
     const responseData = await response.json();
 
-    // Check for a successful response
     if (!responseData.success) {
       throw new Error(
         responseData.message || "Unknown error occurred during file upload"
       );
     }
 
-    // Return relevant file data
     return {
       id: responseData.data.id,
       filename: responseData.data.filename,
-      url: responseData.data.original_url, // Use the provided URL for the uploaded file
+      url: responseData.data.original_url,
       mimeType: responseData.data.mime_type,
       size: responseData.data.size,
       createdAt: responseData.data.created_at,
@@ -66,7 +64,7 @@ const Input = () => {
       let fileData = null;
 
       if (attachment) {
-        fileData = await uploadToFilebin(attachment);
+        fileData = await uploadFiveToServer(attachment);
       }
 
       const messageData = {
@@ -77,12 +75,10 @@ const Input = () => {
         ...(fileData && { file: fileData }),
       };
 
-      // Update chat document
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion(messageData),
       });
 
-      // Update user chats for current user
       await updateDoc(doc(db, "userChats", currentUser.uid), {
         [data.chatId + ".lastMessage"]: {
           text,
@@ -90,7 +86,6 @@ const Input = () => {
         [data.chatId + ".date"]: serverTimestamp(),
       });
 
-      // Update user chats for the other user
       await updateDoc(doc(db, "userChats", data.user.uid), {
         [data.chatId + ".lastMessage"]: {
           text,
