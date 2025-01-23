@@ -6,11 +6,11 @@ export const formatDate = (dateObj) => {
     const date = new Date(dateObj.seconds * 1000);
 
     if (isToday(date)) {
-        return `Today, ${format(date, "p")}`;
+        return `Hari Ini, ${format(date, "p")}`;
     }
 
     if (isYesterday(date)) {
-        return `Yesterday, ${format(date, "p")}`;
+        return `Kemarin, ${format(date, "p")}`;
     }
 
     return format(date, "MMM d, yyyy, p");

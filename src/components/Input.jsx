@@ -29,7 +29,7 @@ const Input = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  const uploadFiveToServer = async (file) => {
+  const uploadFileToServer = async (file) => {
     const uploadServer = await getUploadServer();
 
     const formData = new FormData();
@@ -65,13 +65,15 @@ const Input = () => {
     };
   };
 
-  const handleSend = async () => {
+  const handleSend = async (e) => {
+    e.preventDefault();
+
     setIsUploading(true);
     try {
       let fileData = null;
 
       if (attachment) {
-        fileData = await uploadFiveToServer(attachment);
+        fileData = await uploadFileToServer(attachment);
       }
 
       const messageData = {
@@ -157,10 +159,10 @@ const Input = () => {
           </div>
         )}
       </div>
-      <div className="input">
+      <form onSubmit={handleSend} className="input">
         <input
           type="text"
-          placeholder="Type something..."
+          placeholder="Ketik sesuatu..."
           onChange={(e) => setText(e.target.value)}
           value={text}
         />
@@ -192,14 +194,14 @@ const Input = () => {
             onChange={(e) => handleFileChange(e.target.files[0])}
           />
           <button
-            onClick={handleSend}
+            type="submit"
             disabled={isUploading || (!attachment && text.length === 0)}
           >
             <FaPaperPlane className="text-white" />
-            {isUploading ? "Uploading" : "Send"}
+            {isUploading ? "Mengupload" : "Kirim"}
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };

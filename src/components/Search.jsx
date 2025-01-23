@@ -101,7 +101,7 @@ const Search = () => {
         <FaSearch size={20} className="text-white" />
         <input
           type="text"
-          placeholder="Find a user"
+          placeholder="Cari Pengguna"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />

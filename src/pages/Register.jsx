@@ -101,9 +101,9 @@ const Register = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <img src={Logo} width={"400px"} alt="logo" />
-        <span className="title">Register</span>
+        <span className="title">Daftar</span>
         <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="Display Name" />
+          <input required type="text" placeholder="Nama" />
           <input required type="email" placeholder="Email" />
           <input required type="password" placeholder="Password" />
           <input
@@ -111,22 +111,21 @@ const Register = () => {
             style={{ display: "none" }}
             type="file"
             id="file"
+            accept="image/*"
             onChange={handleFileChange}
           />
           <label htmlFor="file">
             <img src={preview || Add} width={"100px"} alt="Avatar preview" />
-            <span>
-              {preview ? "Change Profile Picture" : "Select Profile Picture"}
-            </span>
+            <span>{preview ? "Ubah Foto Profil" : "Pilih Foto Profil"}</span>
           </label>
           <button disabled={loading || imgUploading}>
-            {loading ? "Processing..." : "Sign up"}
+            {loading ? "Processing..." : "Daftar"}
           </button>
-          {imgUploading && "Uploading the image, please wait..."}
-          {err && <span>{errMessage}</span>}
+          {imgUploading && "Mengunggah gambar, harap tunggu..."}
+          {err && <span className="error">{errMessage}</span>}
         </form>
         <p>
-          You do have an account? <Link to="/login">Login</Link>
+          Apakah anda sudah punya akun ? <Link to="/login">Masuk</Link>
         </p>
       </div>
     </div>

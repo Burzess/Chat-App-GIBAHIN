@@ -9,6 +9,15 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
 
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Handles login form submission. When the form is submitted, the user is
+   * authenticated using the provided email and password. If authentication
+   * succeeds, the user is redirected to the homepage. If authentication fails,
+   * an error message is displayed to the user.
+   * @param {Event} e - The form submission event
+   */
+  /******  40b1d93b-1e21-40a0-8146-aeaf2d372652  *******/
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
@@ -26,15 +35,15 @@ const Login = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <img src={Logo} width={"400px"} alt="logo" />
-        <span className="title">Login</span>
+        <span className="title">Masuk</span>
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
-          <button type="submit">Sign in</button>
+          <button type="submit">Masuk</button>
           {err && <span className="error">{errMessage}</span>}
         </form>
         <p>
-          You don't have an account? <Link to="/register">Register</Link>
+          Tidak punya akun? <Link to="/register">Daftar</Link>
         </p>
       </div>
     </div>

@@ -37,11 +37,13 @@ const Message = ({ message }) => {
           {message.file && (
             <div className="fileContent">
               {message.file.mimeType?.startsWith("image/") ? (
-                <img
-                  src={message.file.url}
-                  alt={message.file.filename}
-                  className="messageImage"
-                />
+                <a href={message.file.url}>
+                  <img
+                    src={message.file.url}
+                    alt={message.file.filename}
+                    className="messageImage"
+                  />
+                </a>
               ) : message.file.mimeType?.startsWith("video/") ? (
                 <video
                   src={message.file.url}
