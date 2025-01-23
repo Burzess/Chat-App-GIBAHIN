@@ -42,6 +42,12 @@ const Message = ({ message }) => {
                   alt={message.file.filename}
                   className="messageImage"
                 />
+              ) : message.file.mimeType?.startsWith("video/") ? (
+                <video
+                  src={message.file.url}
+                  controls
+                  className="messageVideo"
+                />
               ) : (
                 <a
                   href={message.file.url}
