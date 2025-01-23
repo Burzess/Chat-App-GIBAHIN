@@ -166,28 +166,86 @@ a {
 
             .messages {
                 @apply h-full w-full p-4 overflow-y-auto;
+
+                .message {
+                    @apply flex flex-col items-start gap-2 mb-2;
+
+                    .messageInfo {
+                        @apply w-full flex flex-row gap-2;
+
+                        .userInfo img {
+                            @apply h-8 w-8 rounded-full;
+                        }
+                    }
+
+                    .messageContent {
+                        @apply max-w-[80%] flex flex-col gap-2 rounded-lg;
+
+                        p {
+                            @apply text-sm bg-white p-2 rounded-b-lg rounded-tr-lg;
+                        }
+
+                        .fileContent {
+                            @apply max-w-[600px];
+
+                            .messageImage {
+                                @apply rounded-lg max-w-[400px];
+                            }
+                        }
+                    }
+
+                    &.owner {
+                        @apply flex flex-col items-end gap-2;
+
+                        .messageInfo {
+                            @apply flex flex-row-reverse gap-2;
+                        }
+
+                        .messageContent {
+                            @apply items-end;
+
+                            p {
+                                @apply rounded-tl-lg rounded-tr-none bg-zinc-400;
+                            }
+                        }
+                    }
+
+                    .date {
+                        @apply min-w-fit flex flex-row items-center gap-1 text-xs text-white;
+                    }
+
+                }
+
             }
 
             .attachment {
                 @apply w-full p-2;
 
                 .attachmentPreview {
-                    @apply relative flex flex-row justify-between px-3 py-2 bg-zinc-700 rounded-lg;
+                    @apply relative flex flex-row justify-between px-3 py-2 bg-zinc-700 text-white rounded-lg;
 
                     .preview {
                         @apply flex flex-row items-center gap-2;
 
                         img {
-                            @apply h-16;
+                            @apply h-16 rounded;
                         }
 
                         .details {
-                            @apply flex flex-col text-xs text-white;
+                            @apply flex flex-col text-sm;
+
+                            .fileName {
+                                @apply font-medium;
+                            }
+
+                            .fileSize {
+                                @apply text-xs;
+                            }
                         }
                     }
 
                     .removeIcon {
-                        @apply absolute top-1 right-1 w-[20px] h-[20px] text-white cursor-pointer hover:bg-zinc-400 transition p-1 rounded-lg;
+                        @apply absolute top-1 right-1 w-[20px] h-[20px] cursor-pointer hover:bg-zinc-400 transition p-1 rounded-lg;
                     }
                 }
             }
@@ -202,8 +260,28 @@ a {
                 .send {
                     @apply flex flex-row justify-between items-center gap-2 w-full max-w-[25%] text-sm hover:bg-zinc-400/40 transition p-2 rounded-lg;
 
+                    label {
+                        @apply cursor-pointer;
+                    }
+
                     button {
-                        @apply w-full flex flex-row justify-center items-center gap-2 text-sm uppercase tracking-wide font-bold bg-zinc-500 hover:bg-zinc-600 text-white transition p-2 rounded-lg;
+                        @apply w-full flex flex-row justify-center items-center gap-2 text-sm uppercase tracking-wide font-bold bg-zinc-500 hover:bg-zinc-600 text-white transition p-2 rounded-lg cursor-pointer;
+                    }
+                }
+            }
+
+            .filePreview {
+                @apply flex flex-row items-center gap-2 px-4 py-2 bg-zinc-700 hover:bg-zinc-800 text-white rounded-lg transition;
+
+                .fileDetails {
+                    @apply flex flex-col text-sm;
+
+                    .fileName {
+                        @apply font-medium;
+                    }
+
+                    .fileSize {
+                        @apply text-xs;
                     }
                 }
             }

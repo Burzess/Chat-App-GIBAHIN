@@ -11,7 +11,14 @@ import {
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { fileDrivetoken, getUploadServer } from "../fileDrive";
-import { FaImage, FaPaperclip, FaPaperPlane, FaX } from "react-icons/fa6";
+import {
+  FaFile,
+  FaImage,
+  FaPaperclip,
+  FaPaperPlane,
+  FaX,
+} from "react-icons/fa6";
+import { formatBytes } from "../lib";
 
 const Input = () => {
   const [text, setText] = useState("");
@@ -129,15 +136,20 @@ const Input = () => {
               <div className="preview">
                 <img src={preview} alt="Preview" className="previewImage" />
                 <div className="details">
-                  <span>{attachment.name}</span>
-                  <span>{(attachment.size / 1024).toFixed(2)} KB</span>
+                  <span className="fileName">{attachment.name}</span>
+                  <span className="fileSize">
+                    {formatBytes(attachment.size)}
+                  </span>
                 </div>
               </div>
             ) : (
               <div className="preview">
+                <FaFile size={30} />
                 <div className="details">
-                  <span>{attachment.name}</span>
-                  <span>{(attachment.size / 1024).toFixed(2)} KB</span>
+                  <span className="fileName">{attachment.name}</span>
+                  <span className="fileSize">
+                    {(attachment.size / 1024).toFixed(2)} KB
+                  </span>
                 </div>
               </div>
             )}
@@ -184,7 +196,7 @@ const Input = () => {
             disabled={isUploading || (!attachment && text.length === 0)}
           >
             <FaPaperPlane className="text-white" />
-            {isUploading ? "Uploading..." : "Send"}
+            {isUploading ? "Uploading" : "Send"}
           </button>
         </div>
       </div>
