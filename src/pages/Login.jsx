@@ -9,15 +9,6 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState("");
   const navigate = useNavigate();
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Handles login form submission. When the form is submitted, the user is
-   * authenticated using the provided email and password. If authentication
-   * succeeds, the user is redirected to the homepage. If authentication fails,
-   * an error message is displayed to the user.
-   * @param {Event} e - The form submission event
-   */
-  /******  40b1d93b-1e21-40a0-8146-aeaf2d372652  *******/
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
